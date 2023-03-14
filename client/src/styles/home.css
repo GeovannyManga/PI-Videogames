@@ -1,0 +1,24 @@
+
+
+.div-home{
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(5,7,12,0.65), rgba(5,7,12,0.65)), url("../assets/batman.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s forwards;
+    background-attachment:local;
+}
+
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

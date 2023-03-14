@@ -1,8 +1,8 @@
 const axios = require("axios");
-const { geners } = require("../db");
+const { genres } = require("../db");
 
 const finder = async (name) => {
-  const buscar = await geners.findAll(name);
+  const buscar = await genres.findAll(name);
   return buscar;
 };
 
@@ -15,8 +15,8 @@ const genersNames = async () => {
   for (let i = 0; i < api.length; i++) {
     const gener = api[i];
 
-    await geners.create({
-      Nombre: gener.name,
+    await genres.create({
+      name: gener.name,
     });
   }
   const buscador = finder();

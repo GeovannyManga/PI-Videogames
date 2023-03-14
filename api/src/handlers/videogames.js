@@ -5,7 +5,7 @@ const {
   buscadorId,
   buscadorName,
 } = require("../controllers/videogames.js");
-const {Videogames, geners} = require("../db");
+const { Videogames, genres } = require("../db");
 const videogamesRouters = Router();
 
 videogamesRouters.get("/", async (req, res) => {
@@ -22,11 +22,42 @@ videogamesRouters.get("/", async (req, res) => {
 videogamesRouters.get("/name", async (req, res) => {
   try {
     const { name } = req.query;
-  const response = await buscadorName(name);
-  res.send(response);
+    const response = await buscadorName(name);
+    res.send(response);
   } catch (error) {
-    console.log(error)
-    res.status(404).send("Este nombre no corresponde a ningun juego pa")
+    console.log(error);
+    res.status(404).send("Este nombre no corresponde a ningun juego pa");
+  }
+});
+
+videogamesRouters.post("/", async (req, res) => {
+  try {
+    const {
+      name,
+      description,
+      platforms,
+      background_image,
+      released,
+      rating,
+      source,
+      generId,
+    } = req.body;
+    console.log(generId)
+    const newVideogames = await Videogames.create({
+      name,
+      description,
+      platforms,
+      background_image,
+      released,
+      rating,
+      source,
+      generId,
+    });
+    await newVideogames.addGenres(generId);
+    res.send(newVideogames);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("algo salio mal");
   }
 });
 
@@ -38,35 +69,7 @@ videogamesRouters.get("/:id", async (req, res) => {
     res.send(buscar);
   } catch (error) {
     console.log(error);
-     res.status(404).send("Este id no corresponde a ningun videojuego pa")
-  }
-});
-
-videogamesRouters.post("/", async (req, res) => {
-  try {
-    const {
-      Nombre,
-      Descripcion,
-      Plataformas,
-      Imagen,
-      Fecha_de_Lamzamiento,
-      Rating,
-      generId,
-    } = req.body;
-    const newVideogames = await Videogames.create({
-      Nombre,
-      Descripcion,
-      Plataformas,
-      Imagen,
-      Fecha_de_Lamzamiento,
-      Rating,
-      generId
-    });
-    await newVideogames.addGeners(generId)
-    res.send(newVideogames);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("algo salio mal pa, intentalo mas tarde")
+    res.status(404).send("Este id no corresponde a ningun videojuego pa");
   }
 });
 

@@ -1,0 +1,21 @@
+
+
+.paginado-ul{
+    display: flex;
+    width: 100%;
+    height: 3em;
+    justify-content: center;
+}
+
+.paginado-li{
+    list-style: none;
+}
+
+.paginado-button{
+    margin-right: 1em;
+    width: 2em;
+    height: 2em;
+    border-radius: 8px;
+    color:  white;
+    background-color: rgba(76, 0, 130, 0.616);
+}

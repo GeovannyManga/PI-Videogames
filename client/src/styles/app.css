@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+
+*{
+    font-family: 'Black Ops One', cursive;
+}
+.error{
+    width: 80%;
+    height: 90vh;
+    display: block;
+	margin: 0 auto;
+}

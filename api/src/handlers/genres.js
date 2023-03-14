@@ -1,6 +1,6 @@
 const {Router} = require("express")
 const genersRouters = Router()
-const {genersNames}= require("../controllers/geners.js")
+const {genersNames}= require("../controllers/genres.js")
 
 genersRouters.get("/", async (req, res)=> {
    const response = await genersNames()

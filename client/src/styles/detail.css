@@ -1,0 +1,100 @@
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: rgba(76, 0, 130, 0.441);
+}
+
+.div-container-detail {
+    
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  width: 50em;
+  height: 500px;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-left: auto;
+  margin-top: 3em;
+  font-size: 1.2rem; /* Tamaño de letra ajustado a 1.2rem */
+  margin-right: auto;
+  background-color: #7c40a1;
+  text-align: center;
+  background-image: linear-gradient(
+      to bottom,
+      rgba(211, 24, 24, 0.521),
+      rgba(0, 0, 0, 0.174)
+    ),
+    url("../assets/back.webp");
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: auto; /* Añade esta línea */
+
+}
+.div-container-detail::-webkit-scrollbar {
+    width: 10px;
+    background-color: #8A2BE2;
+  }
+  
+  .div-container-detail::-webkit-scrollbar-thumb {
+    background-color: #ee5151;
+    border-radius: 5px;
+  }
+  
+  .div-container-detail::-moz-scrollbar {
+    width: 10px;
+    background-color: #8A2BE2;
+  }
+  
+  .div-container-detail::-moz-scrollbar-thumb {
+    background-color: #6e0707;
+    border-radius: 5px;
+  }
+  
+
+.h1-detail {
+  font-size: 4rem; /* Tamaño de letra ajustado a 4rem */
+  margin-bottom: 20px;
+  color: #f0e5ff;
+}
+
+.description-detail {
+  font-size: 1.8rem; /* Tamaño de letra ajustado a 1.5rem */
+  margin-bottom: 20px;
+  color: #f0e5ff;
+}
+
+.released-detail {
+  font-size: 1rem; /* Tamaño de letra ajustado a 1rem */
+  margin-bottom: 20px;
+  color: #f0e5ff;
+}
+
+div .div-container-detail p {
+  font-size: 1rem; /* Tamaño de letra ajustado a 0.8rem */
+  margin-bottom: 10px;
+  color: #f0e5ff;
+}
+
+.back {
+    display: inline-block;
+    text-align: center;
+    line-height: 4em;
+    width: 4em;
+    height: 4em;
+    border-radius: 50%;
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5em;
+    color: white;
+    background-color: #7c40a1;
+    text-decoration: none;
+  }
+  
+
+.img-detail {
+  width: 15em;
+  height: 15em;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+}

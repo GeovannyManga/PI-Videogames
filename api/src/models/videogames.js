@@ -10,29 +10,27 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
     },
-    Nombre: {
+    name: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
-    Descripcion: {
+    description: {
+      type: DataTypes.TEXT,
+    },
+    platforms: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+    },
+    background_image: {
       type: DataTypes.STRING,
-      allowNull: false
     },
-    Plataformas: {
+    released: {
       type: DataTypes.STRING,
-      allowNull: false
     },
-    Imagen: {
+    rating: {
       type: DataTypes.STRING,
-      allowNull: false
     },
-    Fecha_de_Lamzamiento: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    Rating: {
-      type: DataTypes.STRING,
-      allowNull: false
+    source: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
     }
   });
 };
