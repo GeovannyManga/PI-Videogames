@@ -83,37 +83,26 @@ export const getDetail = (id) => {
 
 
 
-// // Definimos la acción
-// export const filterDbInfo = (state) => ({
-//   type: FILTER_DB_INFO,
-//   payload:  state.filter(obj => obj.hasOwnProperty('source'))
-// });
-
 
 export const filterDbInfo = () => {
   return async function (dispatch) {
     return fetch("http://localhost:3001/videogames")
       .then((response) => response.json())
       .then((data) => {
-        dispatch({ type: FILTER_DB_INFO, payload: data.filter(obj => obj.hasOwnProperty('source'))});
+        dispatch({ type: FILTER_DB_INFO, payload: data.filter(obj => obj.hasOwnProperty("ID"))});
         console.log(data);
       })
       .catch((error) => console.log(error));
   };
 };
 
-// // Definimos la acción
-// export const filterApiInfo = (state) => ({
-//   type: FILTER_API_INFO,
-//   payload:  state.filter(obj =>  !obj.hasOwnProperty('source'))
-// });
 
 export const filterApiInfo = () => {
   return async function (dispatch) {
     return fetch("http://localhost:3001/videogames")
       .then((response) => response.json())
       .then((data) => {
-        dispatch({ type: FILTER_API_INFO, payload: data.filter(obj => !obj.hasOwnProperty('source'))});
+        dispatch({ type: FILTER_API_INFO, payload: data.filter(obj => !obj.hasOwnProperty('ID'))});
         console.log(data);
       })
       .catch((error) => console.log(error));

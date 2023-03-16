@@ -27,8 +27,8 @@ const Cards = () => {
   };
 
   useEffect(() => {
-    if (state.length === 0) dispatch(getAllVideogames());
-  }, [dispatch, state.length]);
+   dispatch(getAllVideogames());
+  }, [dispatch]);
 
   return (
     <div>
@@ -44,14 +44,14 @@ const Cards = () => {
         <img src={loaderImage} alt="Loading..." />
       ) :
         videogamesActuales && videogamesActuales.length > 0 ? 
-         videogamesActuales.map((pais) => {
+         videogamesActuales.map((game) => {
             return (
               <Card className="card-component"
-                ID={pais.ID}
-                id={pais.id}
-                name={pais.name}
-                img={pais.background_image}
-                generos={pais.genres}
+                ID={game.ID}
+                id={game.id}
+                name={game.name}
+                img={game.background_image}
+                generos={game.genres}
                 />
           )
         }): <img src={loaderImage} alt="loader" />}

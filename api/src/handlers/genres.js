@@ -1,9 +1,9 @@
 const {Router} = require("express")
 const genersRouters = Router()
-const {genersNames}= require("../controllers/genres.js")
+const {geners}= require("../controllers/genres.js")
 
 genersRouters.get("/", async (req, res)=> {
-   const response = await genersNames()
+   const response = await geners()
    res.send(response)
 })
 

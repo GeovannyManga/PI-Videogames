@@ -54,10 +54,10 @@ videogamesRouters.post("/", async (req, res) => {
       generId,
     });
     await newVideogames.addGenres(generId);
-    res.send(newVideogames);
+    res.send("ok");
   } catch (error) {
     console.log(error);
-    res.status(500).send("algo salio mal");
+    res.status(500).send("error");
   }
 });
 

@@ -1,123 +1,258 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createVideogame, getAllGenres } from "../redux/actions.js";
-import {  } from "../styles/form.css";
+import {} from "../styles/form.css";
 
 const Form = () => {
-  const [generState, setGenerState] = useState([]);
-  const [nombreGenre, setNombreGenre] = useState([])
-  const [exito, setExito] = useState(null)
   const dispatch = useDispatch();
+  const [generState, setGenerState] = useState([]);
+  const [nombreGenre, setNombreGenre] = useState([]);
+  const [styleError, setEstyleError] = useState("");
+  const [error, setError] = useState({
+    name: "",
+    description: "",
+    platforms: "",
+    image: "",
+    released: "",
+    rating: "",
+  });
 
-  
   console.log(generState);
 
   useEffect(() => {
-      dispatch(getAllGenres());
-    }, [dispatch]);
+    dispatch(getAllGenres());
+  }, [dispatch]);
 
   const genre = useSelector((state) => state.genres);
-  
-  
+
   const handlerGeners = (event) => {
-      const evento = event.target.value;
-      const newGenerState = [...generState, evento];
-      let uniqueArr = [...new Set(newGenerState)];
-      setGenerState(uniqueArr);
-      console.log(evento);
-      const selectedGenre = genre.find(genre => genre.id === parseInt(evento));
-      if (selectedGenre) {
-    setNombreGenre(prevNombreGenre => [...prevNombreGenre, selectedGenre.name]);
-  } else {
-    setNombreGenre('');
-  }
+    const evento = event.target.value;
+    const newGenerState = [...generState, evento];
+    let uniqueArr = [...new Set(newGenerState)];
+    setGenerState(uniqueArr);
+    console.log(evento);
+    const selectedGenre = genre.find((genre) => genre.id === parseInt(evento));
+
+    if (!nombreGenre.includes(selectedGenre.name)) {
+      setNombreGenre([...nombreGenre, selectedGenre.name]);
     }
+  };
 
-    
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const body = {
-            name: event.target.name.value,
-            description: event.target.description.value,
-            platforms: event.target.platforms.value.split(","),
-            background_image: event.target.background_image.value,
-            released: event.target.released.value,
-            rating: event.target.rating.value,
-            generId: generState,
-        };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const body = {
+      name: event.target.name.value,
+      description: event.target.description.value,
+      platforms: event.target.platforms.value.split(", "),
+      background_image: event.target.background_image.value,
+      released: event.target.released.value,
+      rating: event.target.rating.value,
+      generId: generState,
+    };
     console.log(body);
-    
-    dispatch(createVideogame(body).then(response => {
-        if (response.ok) {
-          // Si la petición fue exitosa (código de estado HTTP 200 a 299)
-          setExito(true)
-          console.log(exito)
-          // Aquí puedes hacer algo con la respuesta del servidor si lo necesitas
-        } else {
-          // Si la petición no fue exitosa
-          setExito(true)
-          console.log(exito)
-          // Aquí puedes hacer algo con el mensaje de error que envió el servidor si lo necesitas
-        }
-      }));
 
-};
-const handleNameValidation = (e) => {
-const value = e.target.value
-  const regex = /^[a-zA-Z ]+$/;
-   
-   if ( regex.test(value)) {
-    return false
-   } else {
-    
-   }
-}
+    dispatch(createVideogame(body));
+  };
+
+  const validateName = (event) => {
+    const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+([\s-][a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/;
+    let name = event.target.value;
+    if (!regex.test(name)) {
+      setError({ ...error, name: "error-name" });
+      console.log(error);
+      setEstyleError("-error");
+      return styleError;
+    } else {
+      setError({ ...error, name: "" });
+    }
+  };
+
+  const validateDescription = (event) => {
+    const regex = /^[a-zA-Z0-9\u00F1\s]*$/;
+    let description = event.target.value;
+    if (!regex.test(description)) {
+      setError({ ...error, description: "error-description" });
+      console.log(error);
+      setEstyleError("-error");
+      return styleError;
+    } else {
+      setError({ ...error, description: "" });
+    }
+  };
+
+
+
+  const validateReleased = (event) => {
+    const regex = /^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+    let released = event.target.value;
+    if (!regex.test(released)) {
+      setError({ ...error, released: "error-released" });
+      console.log(error);
+      setEstyleError("-error");
+      return styleError;
+    } else {
+      setError({ ...error, released: "" });
+    }
+  };
+  // ^[0-5](\.[0-9])?$
+
+  const validateRating = (event) => {
+    const regex = /^[0-5](\.[0-9])?$/;
+    let rating = event.target.value;
+    if (!regex.test(rating)) {
+      setError({ ...error, rating: "error-rating" });
+      console.log(error);
+      setEstyleError("-error");
+      return styleError;
+    } else {
+      setError({ ...error, rating: "" });
+    }
+  };
+
+  const validatePlatfomrs = (event) => {
+    const regex = /^[a-zA-Z0-9\s]*$/;
+    let platforms = event.target.value;
+    if (!regex.test(platforms)) {
+      setError({ ...error, platforms: "error-platforms" });
+      console.log(error);
+      setEstyleError("-error");
+      return styleError;
+    } else {
+      setError({ ...error, platforms: "" });
+    }
+  };
+
   return (
-      <form className="form-container" onSubmit={handleSubmit}>
-        <h1 className="titulo">Crear Videojuego</h1>
-      <label className="label">
-        Name:
-        <input onChange={(e)=>handleNameValidation(e)} autoComplete="off" className="input" type="text" name="name" />
-      </label>
-      <label className="label">
-        Description:
-        <input autoComplete="off" className="input" type="text" name="description" />
-      </label>
-      <label className="label">
-        Platforms:
-        <input autoComplete="off" className="input" type="text" name="platforms" />
-      </label>
-      <label className="label">
-        Imagen:
-        <input autoComplete="off" className="input" type="text" name="background_image" />
-      </label>
-      <label className="label">
-        Released:
-        <input autoComplete="off" className="input" type="text" name="released" />
-      </label>
-      <label className="label">
-        Rating:
-        <input autoComplete="off" className="input" type="text" name="rating" />
-      </label>
-      <label className="label">
-        Genero: {nombreGenre.join(", ")}
-        <select className="select"
-          defaultValue={""}
-          onChange={(e) => handlerGeners(e)}
-        >
-          <option className="op-form" disabled value={""}>
-            elegir genero
-          </option>
-          {genre.map((genres) => (
-            <option className="op-form" key={genres.id} name="genero" value={genres.id}>
-              {genres.name}
+    <div>
+      <form onSubmit={handleSubmit} className="form-container">
+        <h1 className="titulo">Create Videogames</h1>
+        <label className="label">
+          Name:
+          <input
+            onChange={validateName}
+            autoComplete="off"
+            className={`input${
+              error.name === "error-name" && styleError === "-error"
+                ? styleError
+                : ""
+            }`}
+            type="text"
+            name="name"
+          />
+          {error.name === "error-name" && (
+            <p className="p-error">El nombre no es valido</p>
+          )}
+        </label>
+        <label className="label">
+          Description:
+          <textarea
+            onChange={validateDescription}
+            autoComplete="off"
+            className={`input${
+              error.description === "error-description" &&
+              styleError === "-error"
+                ? styleError
+                : ""
+            }`}
+            type="text"
+            name="description"
+          />
+          {error.description === "error-description" && (
+            <p className="p-error">la description no es valido</p>
+          )}
+        </label>
+        <label className="label">
+          Platforms:
+          <input
+            onChange={validatePlatfomrs}
+            autoComplete="off"
+            className={`input${
+              error.platforms === "error-platforms" && styleError === "-error"
+                ? styleError
+                : ""
+            }`}
+            type="text"
+            name="platforms"
+          />
+          {error.platforms === "error-platforms" && (
+            <p className="p-error">la plataforma no es valida</p>
+          )}
+        </label>
+        <label className="label">
+          Imagen:
+          <input
+            autoComplete="off"
+            className="input"
+            type="text"
+            name="background_image"
+          />
+          {error.image === "error-image" && (
+            <p className="p-error">Url no es valida</p>
+          )}
+        </label>
+        <label className="label">
+          Released:
+          <input
+            placeholder="example: 1999-12-01"
+            onChange={validateReleased}
+            autoComplete="off"
+            className={`input${
+              error.released === "error-released" && styleError === "-error"
+                ? styleError
+                : ""
+            }`}
+            type="text"
+            name="released"
+          />
+          {error.released === "error-released" && (
+            <p className="p-error"> fecha de lanzamiento no valida</p>
+          )}
+        </label>
+        <label className="label">
+          Rating:
+          <input
+            placeholder="example: 4.5"
+            onChange={validateRating}
+            autoComplete="off"
+            className={`input${
+              error.rating === "error-rating" && styleError === "-error"
+                ? styleError
+                : ""
+            }`}
+            type="text"
+            name="rating"
+          />
+          {error.rating === "error-rating" && (
+            <p className="p-error"> rating no valida</p>
+          )}
+        </label>
+        <label className="label">
+          Genres: {nombreGenre.join(", ")}
+          <select
+            className="select"
+            defaultValue={""}
+            onChange={(e) => handlerGeners(e)}
+          >
+            <option className="op-form" disabled value={""}>
+              Select Genres:
             </option>
-          ))}
-        </select>
-      </label>
-      <button className="buttom-form" type="submit">Create User</button>
-    </form>
+            {genre.map((genres) => (
+              <option
+                className="op-form"
+                key={genres.id}
+                name="genero"
+                value={genres.id}
+              >
+                {genres.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button className="buttom-form" type="submit">
+          Create
+        </button>
+      </form>
+    </div>
   );
-}
-;
-export default Form
+};
+export default Form;

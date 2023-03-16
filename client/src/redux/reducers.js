@@ -15,9 +15,6 @@ const initialState = {
   data: [],
   genres: [],
   detail: [],
-  currentPage: 1,
-  totalPages: 0,
-  items: 15,
   loader: true,
   dataCopy: []
 };
@@ -29,7 +26,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         data: action.payload,
         dataCopy: action.payload,
-        totalPages: Math.ceil(action.payload.length / 15),
+       
       };
     case GET_ALL_NAMES:
       return {
@@ -59,11 +56,13 @@ const reducer = (state = initialState, action) => {
     case FILTER_DB_INFO:
       return {
         ...state,
+        dataCopy: action.payload,
         data: action.payload,
       };
     case FILTER_API_INFO:
       return {
         ...state,
+        dataCopy: action.payload,
         data: action.payload,
       };
     case LOADER:
@@ -74,7 +73,7 @@ const reducer = (state = initialState, action) => {
     case SET_GENRE_FILTER:
       return {
         ...state,
-        data: state.dataCopy.filter((e) => e.genres.some((genre) => genre.name === action.payload))
+        data: state.dataCopy.filter((e) => e.genres.some((genre) =>   genre.name === action.payload))
       };
     default:
       return state;

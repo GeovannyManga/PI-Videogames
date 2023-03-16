@@ -1,28 +1,25 @@
 const axios = require("axios");
 const { genres } = require("../db");
 
-const finder = async (name) => {
-  const buscar = await genres.findAll(name);
-  return buscar;
-};
-
-const genersNames = async () => {
+const geners = async () => {
   const api = (
     await axios.get(
       `https://api.rawg.io/api/genres?key=8832286909b344fea6fba9e9f2ba9e0d`
     )
-  ).data.results;
-  for (let i = 0; i < api.length; i++) {
-    const gener = api[i];
+    ).data.results;
+    console.log(api.length)
+  
+const generosDb = await genres.findAll() 
+if (!generosDb.length  || generosDb < 19) {
+   const SaveGenres = await genres.bulkCreate(api)
+   return SaveGenres
+} else {
+  return await genres.findAll()
+}
 
-    await genres.create({
-      name: gener.name,
-    });
-  }
-  const buscador = finder();
-  return buscador;
+
 };
 
 module.exports = {
-  genersNames,
+  geners,
 };
