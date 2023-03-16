@@ -70,7 +70,7 @@ const Form = () => {
       dispatch(createVideogame(body));
       history.push("/home");
     } else {
-      alert("que mal");
+      alert("Debes rellenar todos los campos");
     }
   };
 
@@ -84,7 +84,6 @@ const Form = () => {
       return styleError;
     } else {
       setError({ ...error, name: "" });
-      setEstyleError("");
     }
   };
 
@@ -98,7 +97,6 @@ const Form = () => {
       return styleError;
     } else {
       setError({ ...error, description: "" });
-      setEstyleError("");
     }
   };
 
@@ -112,7 +110,6 @@ const Form = () => {
       return styleError;
     } else {
       setError({ ...error, released: "" });
-      setEstyleError("");
     }
   };
   // ^[0-5](\.[0-9])?$
@@ -127,7 +124,6 @@ const Form = () => {
       return styleError;
     } else {
       setError({ ...error, rating: "" });
-      setEstyleError("");
     }
   };
 
@@ -141,7 +137,6 @@ const Form = () => {
       return styleError;
     } else {
       setError({ ...error, platforms: "" });
-      setEstyleError("");
     }
   };
 
