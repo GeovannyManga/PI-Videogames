@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createVideogame, getAllGenres } from "../redux/actions.js";
+import { useHistory } from "react-router-dom";
 import {} from "../styles/form.css";
 
 const Form = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [generState, setGenerState] = useState([]);
   const [nombreGenre, setNombreGenre] = useState([]);
@@ -51,7 +53,25 @@ const Form = () => {
     };
     console.log(body);
 
-    dispatch(createVideogame(body));
+    if (
+      !error.name &&
+      body.name.length >= 2 &&
+      !error.description &&
+      body.description >= 2 &&
+      !error.image &&
+      body.background_image >= 2 &&
+      !error.platforms &&
+      body.platforms >= 2 &&
+      !error.rating &&
+      body.rating >= 2 &&
+      !error.released &&
+      body.released >= 2
+    ) {
+      dispatch(createVideogame(body));
+      history.push("/home");
+    } else {
+      alert("que mal");
+    }
   };
 
   const validateName = (event) => {
@@ -64,6 +84,7 @@ const Form = () => {
       return styleError;
     } else {
       setError({ ...error, name: "" });
+      setEstyleError("");
     }
   };
 
@@ -77,10 +98,9 @@ const Form = () => {
       return styleError;
     } else {
       setError({ ...error, description: "" });
+      setEstyleError("");
     }
   };
-
-
 
   const validateReleased = (event) => {
     const regex = /^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
@@ -92,6 +112,7 @@ const Form = () => {
       return styleError;
     } else {
       setError({ ...error, released: "" });
+      setEstyleError("");
     }
   };
   // ^[0-5](\.[0-9])?$
@@ -106,6 +127,7 @@ const Form = () => {
       return styleError;
     } else {
       setError({ ...error, rating: "" });
+      setEstyleError("");
     }
   };
 
@@ -119,6 +141,7 @@ const Form = () => {
       return styleError;
     } else {
       setError({ ...error, platforms: "" });
+      setEstyleError("");
     }
   };
 
